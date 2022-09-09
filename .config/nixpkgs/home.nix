@@ -1,5 +1,16 @@
 { config, pkgs, ... }:
 
+let
+  papercolor = pkgs.vimUtils.buildVimPlugin {
+    name = "papercolor-theme";
+    src = pkgs.fetchFromGitHub {
+      owner = "NLKNguyen";
+      repo = "papercolor-theme";
+      rev = "1.0";
+      sha256 = "";
+    };
+  };
+in
 {
   home.username = "Dolphin";
   home.homeDirectory = "/Users/Dolphin";
@@ -20,7 +31,7 @@
   programs.zsh = {
     enable = true;
 
-    enableSyntaxHighlighting = true;
+    # enableSyntaxHighlighting = true;
 
     oh-my-zsh = {
       enable = true;
@@ -49,7 +60,13 @@
 
   programs.neovim = {
     enable = true;
-    extraConfig = builtins.readFile ~/.config/nvim/init.vim;
+    extraConfig = builtins.readFile ~/.config/nixpkgs/init.vim;
+    plugins = with pkgs.vimPlugins; [
+      papercolor-theme
+      vim-nix
+      vim-airline
+      vim-airline-themes
+    ];
   };
 
   programs.git = {
