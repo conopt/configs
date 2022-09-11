@@ -1,3 +1,4 @@
+-- Basic settings
 vim.opt.number = true
 vim.opt.smartindent = true
 
@@ -15,77 +16,32 @@ vim.cmd[[colorscheme PaperColor]]
 vim.g.airline_theme = 'papercolor'
 vim.opt.termguicolors = true
 
-vim.api.nvim_set_keymap('n', '<D-c>', '"+y', {noremap = true})
-vim.api.nvim_set_keymap('v', '<D-c>', '"+y', {noremap = true})
-vim.api.nvim_set_keymap('n', '<D-v>', '"+p', {noremap = true})
-vim.api.nvim_set_keymap('i', '<D-v>', '<C-r>+', {noremap = true})
-vim.api.nvim_set_keymap('c', '<D-v>', '<C-r>+', {noremap = true})
+-- macOS related copy/paste key mappings
+vim.keymap.set('n', '<D-c>', '"+y')
+vim.keymap.set('v', '<D-c>', '"+y')
+vim.keymap.set('n', '<D-v>', '"+p')
+vim.keymap.set('i', '<D-v>', '<C-r>+')
+vim.keymap.set('c', '<D-v>', '<C-r>+')
 
-vim.api.nvim_set_keymap('', '<D-t>', ':tabnew<CR>', {noremap = true})
-vim.api.nvim_set_keymap('', '<D-w>', ':tabclose<CR>', {noremap = true})
-vim.api.nvim_set_keymap('', '<D-1>', '1gt', {noremap = true})
-vim.api.nvim_set_keymap('', '<D-2>', '2gt', {noremap = true})
-vim.api.nvim_set_keymap('', '<D-3>', '3gt', {noremap = true})
+-- Tab navigation key mappings
+vim.keymap.set('', '<D-t>', ':tabnew<CR>')
+vim.keymap.set('', '<D-w>', ':tabclose<CR>')
+for i = 1,9 do
+  vim.keymap.set('', string.format('<D-%d>', i), i .. 'gt')
+end
 
--- local packer = require('packer')
--- local use = packer.use
-
--- use {
---   'nvim-telescope/telescope.nvim', tag = '0.1.0',
---   requires = { {'nvim-lua/plenary.nvim'} }
--- }
--- 
--- use {
---   'nvim-lualine/lualine.nvim',
---   requires = { 'kyazdani42/nvim-web-devicons', opt = true }
--- }
-
-require('hop').setup()
+-- Telescope key mappings
 require('telescope').setup()
-require('nvim-tree').setup()
--- require('feline').setup()
+local tsb = require('telescope.builtin');
+vim.keymap.set('', '<F8>', tsb.grep_string)
+vim.keymap.set('', '<S-F8>', tsb.live_grep)
+vim.keymap.set('', '<F2>', tsb.find_files)
+
 require('lualine').setup {
   options = {
     theme = 'PaperColor'
   }
 }
--- require('lualine').setup {
---   options = {
---     icons_enabled = true,
---     theme = 'auto',
---     component_separators = { left = '', right = ''},
---     section_separators = { left = '', right = ''},
---     disabled_filetypes = {
---       statusline = {},
---       winbar = {},
---     },
---     ignore_focus = {},
---     always_divide_middle = true,
---     globalstatus = false,
---     refresh = {
---       statusline = 1000,
---       tabline = 1000,
---       winbar = 1000,
---     }
---   },
---   sections = {
---     lualine_a = {'mode'},
---     lualine_b = {'branch', 'diff', 'diagnostics'},
---     lualine_c = {'filename'},
---     lualine_x = {'encoding', 'fileformat', 'filetype'},
---     lualine_y = {'progress'},
---     lualine_z = {'location'}
---   },
---   inactive_sections = {
---     lualine_a = {},
---     lualine_b = {},
---     lualine_c = {'filename'},
---     lualine_x = {'location'},
---     lualine_y = {},
---     lualine_z = {}
---   },
---   tabline = {},
---   winbar = {},
---   inactive_winbar = {},
---   extensions = {}
--- }
+
+require('hop').setup()
+require('nvim-tree').setup()

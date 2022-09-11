@@ -1,6 +1,15 @@
 { config, pkgs, ... }:
 
 let
+  nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-treesitter";
+    src = pkgs.fetchFromGitHub {
+      owner = "nvim-treesitter";
+      repo = "nvim-treesitter";
+      rev = "f53a5a6471994693e7e550b29627ca73d91e0536";
+      sha256 = "sha256-FebRBPX4lpLw6Tj7wYiVUpzejAkK3tU1JQIc+6icSMo";
+    };
+  };
   lualine = pkgs.vimUtils.buildVimPlugin {
     name = "lualine";
     src = pkgs.fetchFromGitHub {
@@ -62,11 +71,15 @@ in
   home.packages = [
     pkgs.git
     pkgs.htop
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.source-code-pro
     ruby
   ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    HMC = "~/.config/nixpkgs/home.nix";
   };
 
   programs.zsh = {
@@ -113,24 +126,14 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
-      #{
-      #  plugin = packer-nvim;
-      #  type = "lua";
-      #  config = ''
-      #    require('packer').init()
-      #    require('_init')
-      #  '';
-      #}
       plenary
+      nvim-treesitter
       papercolor-theme
       hop
       telescope
       nvim-tree
-      #feline-nvim
       lualine
       vim-nix
-      #vim-airline
-      #vim-airline-themes
     ];
     extraConfig = ''
       lua require('_init')
