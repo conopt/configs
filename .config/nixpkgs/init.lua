@@ -16,32 +16,42 @@ vim.cmd[[colorscheme PaperColor]]
 vim.g.airline_theme = 'papercolor'
 vim.opt.termguicolors = true
 
--- macOS related copy/paste key mappings
-vim.keymap.set('n', '<D-c>', '"+y')
-vim.keymap.set('v', '<D-c>', '"+y')
-vim.keymap.set('n', '<D-v>', '"+p')
-vim.keymap.set('i', '<D-v>', '<C-r>+')
-vim.keymap.set('c', '<D-v>', '<C-r>+')
-
--- Tab navigation key mappings
-vim.keymap.set('', '<D-t>', ':tabnew<CR>')
-vim.keymap.set('', '<D-w>', ':tabclose<CR>')
-for i = 1,9 do
-  vim.keymap.set('', string.format('<D-%d>', i), i .. 'gt')
-end
-
--- Telescope key mappings
+-- Load plugins
 require('telescope').setup()
-local tsb = require('telescope.builtin');
-vim.keymap.set('', '<F8>', tsb.grep_string)
-vim.keymap.set('', '<S-F8>', tsb.live_grep)
-vim.keymap.set('', '<F2>', tsb.find_files)
-
 require('lualine').setup {
   options = {
     theme = 'PaperColor'
   }
 }
-
 require('hop').setup()
 require('nvim-tree').setup()
+
+function alt(key)
+  -- return command in macOS, meta in other platforms
+  return string.format('<D-%s>', key)
+end
+
+-- Locating related key mappings
+local hop = require('hop')
+vim.keymap.set('', '<C-f>', hop.hint_words)
+vim.keymap.set('', '<C-j>', hop.hint_lines)
+
+-- macOS related copy/paste key mappings
+vim.keymap.set('n', alt('c'), '"+y')
+vim.keymap.set('v', alt('c'), '"+y')
+vim.keymap.set('n', alt('v'), '"+p')
+vim.keymap.set('i', alt('v'), '<C-r>+')
+vim.keymap.set('c', alt('v'), '<C-r>+')
+
+-- Tab navigation key mappings
+vim.keymap.set('', alt('t'), ':tabnew<CR>')
+vim.keymap.set('', alt('w'), ':tabclose<CR>')
+for i = 1,9 do
+  vim.keymap.set('', alt(i), i .. 'gt')
+end
+
+-- Telescope key mappings
+local tsb = require('telescope.builtin');
+vim.keymap.set('', '<F8>', tsb.grep_string)
+vim.keymap.set('', '<S-F8>', tsb.live_grep)
+vim.keymap.set('', '<F2>', tsb.find_files)
