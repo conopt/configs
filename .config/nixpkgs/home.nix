@@ -99,8 +99,10 @@ in
       glo = "git log --oneline";
       ga = "git add";
       gc = "git commit";
+      gcm = "git commit -m";
       gcam = "git commit -a -m";
       gcan = "git commit -a --amend --no-edit";
+      gd = "git diff";
       v = "nvim";
     };
 

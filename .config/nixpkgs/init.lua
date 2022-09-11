@@ -13,14 +13,13 @@ vim.opt.errorbells = false
 
 vim.opt.background = 'dark'
 vim.cmd[[colorscheme PaperColor]]
-vim.g.airline_theme = 'papercolor'
 vim.opt.termguicolors = true
 
 -- Load plugins
 require('telescope').setup()
 require('lualine').setup {
   options = {
-    theme = 'PaperColor'
+    theme = 'papercolor_light'
   }
 }
 require('hop').setup()
