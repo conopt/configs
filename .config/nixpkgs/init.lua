@@ -14,6 +14,7 @@ vim.opt.errorbells = false
 vim.opt.background = 'dark'
 vim.cmd[[colorscheme PaperColor]]
 vim.opt.termguicolors = true
+vim.opt.guifont = 'Fira Mono:h14'
 
 -- Load plugins
 require('telescope').setup()
@@ -27,7 +28,11 @@ require('nvim-tree').setup()
 
 function alt(key)
   -- return command in macOS, meta in other platforms
-  return string.format('<D-%s>', key)
+  if vim.fn.has('macunix') then
+    return string.format('<D-%s>', key)
+  else
+    return string.format('<M-%s>', key)
+  end
 end
 
 -- Locating related key mappings

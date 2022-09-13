@@ -74,6 +74,7 @@ in
     pkgs.ripgrep
     pkgs.fd
     pkgs.source-code-pro
+    pkgs.fira-mono
     ruby
   ];
 
@@ -112,17 +113,6 @@ in
       gd = "git diff";
       v = "nvim";
     };
-
-    #plugins = [{
-    #  # will source zsh-autosuggestions.plugin.zsh
-    #  name = "zsh-autosuggestions";
-    #  src = pkgs.fetchFromGitHub {
-    #    owner = "zsh-users";
-    #    repo = "zsh-syntax-highlighting";
-    #    rev = "tags/0.7.1";
-    #    sha256 = "gOG0NLlaJfotJfs+SUhGgLTNOnGLjoqnUp54V9aFJg8=";
-    #  };
-    #}];
   };
 
   programs.fzf = {
