@@ -77,6 +77,13 @@ in
     ruby
   ];
 
+  home.file.".hammerspoon/init.lua".source = ./hammerspoon-init.lua;
+
+  home.file."Library/Rime" = {
+    source = ./rime;
+    recursive = true;
+  };
+
   home.sessionVariables = {
     EDITOR = "nvim";
     HMC = "~/.config/nixpkgs/home.nix";
@@ -143,6 +150,11 @@ in
   };
 
   xdg.configFile."nvim/lua/_init.lua".source = ./init.lua;
+
+  xdg.configFile.iterm2 = {
+    source = ./iterm2;
+    recursive = true;
+  };
 
   programs.git = {
     enable = true;
