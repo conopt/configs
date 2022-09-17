@@ -1,6 +1,24 @@
 { config, pkgs, ... }:
 
 let
+  nvim-web-devicons = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-web-devicons";
+    src = pkgs.fetchFromGitHub {
+      owner = "kyazdani42";
+      repo = "nvim-web-devicons";
+      rev = "2d02a56189e2bde11edd4712fea16f08a6656944";
+      sha256 = "sha256-+t6EVhQ7iC9BZOtVeQwrzkmpmUtc/WWBcUohoX4/+Tg";
+    };
+  };
+  tabline-framework = pkgs.vimUtils.buildVimPlugin {
+    name = "tabline-framework";
+    src = pkgs.fetchFromGitHub {
+      owner = "rafcamlet";
+      repo = "tabline-framework.nvim";
+      rev = "fc388232a38c2ff0e5a7f8840371301d2fd89606";
+      sha256 = "sha256-Qhy21i4rv/l5vm+tztPGy+Z7UUc+7vVhBqlfQcpesBQ=";
+    };
+  };
   nvim-treesitter = pkgs.vimUtils.buildVimPlugin {
     name = "nvim-treesitter";
     src = pkgs.fetchFromGitHub {
@@ -69,12 +87,12 @@ in
   programs.home-manager.enable = true;
 
   home.packages = [
+    pkgs.wget
     pkgs.git
     pkgs.htop
     pkgs.ripgrep
     pkgs.fd
-    pkgs.source-code-pro
-    pkgs.fira-mono
+    (pkgs.nerdfonts.override { fonts = [ "FiraMono" "SourceCodePro" ]; })
     ruby
   ];
 
@@ -126,11 +144,13 @@ in
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
       plenary
+      nvim-web-devicons
+      tabline-framework
       nvim-treesitter
       papercolor-theme
       hop
       telescope
-      nvim-tree
+      # nvim-tree
       lualine
       vim-nix
     ];
