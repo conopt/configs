@@ -92,6 +92,7 @@ in
     pkgs.htop
     pkgs.ripgrep
     pkgs.fd
+    pkgs.any-nix-shell
     (pkgs.nerdfonts.override { fonts = [ "FiraMono" "SourceCodePro" ]; })
     ruby
   ];
@@ -131,6 +132,10 @@ in
       gd = "git diff";
       v = "nvim";
     };
+
+    initExtra = ''
+      any-nix-shell zsh --info-right | source /dev/stdin
+    '';
   };
 
   programs.fzf = {
